@@ -3,6 +3,7 @@ import { AppProvider, useApp } from './context/AppContext';
 import { Navbar } from './components/Navbar';
 import { PushToast } from './components/PushToast';
 import { AuthModal } from './components/AuthModal';
+import { LandingLoginPage } from './components/LandingLoginPage';
 import { OverviewDashboard } from './components/OverviewDashboard';
 import { MovieReviewsList } from './components/MovieReviewsList';
 import { MovieReviewForm } from './components/MovieReviewForm';
@@ -10,7 +11,18 @@ import { ProfileDashboard } from './components/ProfileDashboard';
 import { TestAutomationGuide } from './components/TestAutomationGuide';
 
 const MainAppContent: React.FC = () => {
-  const { activeTab, setActiveTab } = useApp();
+  const { currentUser, activeTab, setActiveTab } = useApp();
+
+  // If user is not logged in and on the default landing view, show LandingLoginPage directly
+  if (!currentUser && activeTab === 'dashboard') {
+    return (
+      <>
+        <LandingLoginPage />
+        <PushToast />
+        <AuthModal />
+      </>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors">
@@ -45,6 +57,8 @@ const MainAppContent: React.FC = () => {
 
           <div className="flex items-center gap-4">
             <button
+              id="footer-test-suite-btn"
+              data-testid="footer-test-suite-btn"
               onClick={() => setActiveTab('test-suite')}
               className="text-indigo-600 dark:text-indigo-400 hover:underline font-medium"
             >

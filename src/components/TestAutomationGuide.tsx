@@ -55,47 +55,60 @@ import { test, expect } from '@playwright/test';
 
 test.describe('CineTrack Core Automation Test Suite', () => {
   test.beforeEach(async ({ page }) => {
+    // App opens directly on the Landing / Login page
     await page.goto('http://localhost:3000');
   });
 
-  test('TC01: Verify dark mode toggle', async ({ page }) => {
+  test('TC01: Verify dark mode toggle on landing page', async ({ page }) => {
     const themeBtn = page.locator('#theme-toggle-button');
     await expect(themeBtn).toBeVisible();
     
-    // Toggle theme
+    // Toggle theme to dark
     await themeBtn.click();
     await expect(page.locator('html')).toHaveClass(/dark/);
     
-    // Toggle back
+    // Toggle back to light
     await themeBtn.click();
   });
 
-  test('TC02: Log in with demo account', async ({ page }) => {
-    // Open auth modal if logged out
-    const signInBtn = page.locator('#header-login-btn');
-    if (await signInBtn.isVisible()) {
-      await signInBtn.click();
-      await page.click('#demo-user-login-btn');
-      await expect(page.locator('#nav-user-name')).toBeVisible();
-    }
+  test('TC02: Log in with credentials or demo button from landing page', async ({ page }) => {
+    // Verify landing page login form is visible
+    await expect(page.locator('#login-form')).toBeVisible();
+    
+    // Method A: Fill credentials
+    await page.fill('#login-email-input', 'alex.rivera@example.com');
+    await page.fill('#login-password-input', 'demo1234');
+    await page.click('#login-submit-button');
+
+    // Or Method B: Use 1-Click Demo Login
+    // await page.click('#demo-user-login-btn');
+
+    // Verify authenticated dashboard is reached
+    await expect(page.locator('#overview-dashboard-view')).toBeVisible();
+    await expect(page.locator('#nav-user-name')).toContainText('Alex Rivera');
   });
 
   test('TC03: Write and publish 5-star movie review', async ({ page }) => {
+    // Log in first
+    await page.click('#demo-user-login-btn');
+    
+    // Navigate to Write Review tab
     await page.click('#nav-tab-write-review');
     
-    // Fill movie title and review
+    // Fill self-inputted movie title and 5-star rating
     await page.fill('#movie-title-input', 'Inception Test');
     await page.click('#star-rating-5');
     await page.fill('#review-text-input', 'Phenomenal screenplay and mind-bending practical effects.');
     await page.click('#submit-review-btn');
     
-    // Verify toast notification & review in list
+    // Verify toast notification & review in feed
     await expect(page.locator('#push-toast-container')).toBeVisible();
     await page.click('#nav-tab-reviews');
     await expect(page.locator('text=Inception Test')).toBeVisible();
   });
 
-  test('TC04: Edit profile information', async ({ page }) => {
+  test('TC04: Edit profile information and save', async ({ page }) => {
+    await page.click('#demo-user-login-btn');
     await page.click('#nav-tab-profile');
     await page.click('#edit-profile-button');
     
@@ -107,6 +120,7 @@ test.describe('CineTrack Core Automation Test Suite', () => {
   });
 
   test('TC05: Verify real-time push notification dispatch', async ({ page }) => {
+    await page.click('#demo-user-login-btn');
     await page.click('#notification-bell-button');
     await page.click('#toggle-simulate-push-form');
     await page.fill('#test-push-title-input', 'Automated Test Notification');
@@ -123,12 +137,14 @@ describe('CineTrack Automation Suite', () => {
     cy.visit('http://localhost:3000');
   });
 
-  it('toggles dark mode', () => {
-    cy.get('#theme-toggle-button').click();
-    cy.get('html').should('have.class', 'dark');
+  it('verifies landing page and logs in with demo account', () => {
+    cy.get('#login-form').should('be.visible');
+    cy.get('#demo-user-login-btn').click();
+    cy.get('#overview-dashboard-view').should('be.visible');
   });
 
   it('submits a movie review with 1-5 star rating', () => {
+    cy.get('#demo-user-login-btn').click();
     cy.get('#nav-tab-write-review').click();
     cy.get('#movie-title-input').type('Dune Test');
     cy.get('#star-rating-4').click();
@@ -138,6 +154,7 @@ describe('CineTrack Automation Suite', () => {
   });
 
   it('edits user profile data', () => {
+    cy.get('#demo-user-login-btn').click();
     cy.get('#nav-tab-profile').click();
     cy.get('#edit-profile-button').click();
     cy.get('#edit-name-input').clear().type('Alex Rivera Automation');

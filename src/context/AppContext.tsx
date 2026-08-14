@@ -97,10 +97,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       try {
         return JSON.parse(saved);
       } catch {
-        return INITIAL_DEMO_USER;
+        return null;
       }
     }
-    return INITIAL_DEMO_USER; // Default logged in for easy test suite running
+    return null; // Start unauthenticated so Landing Login page is shown first
   });
 
   const [registeredUsers, setRegisteredUsers] = useState<UserProfile[]>(() => {
@@ -436,12 +436,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Automation Test Helper Fixtures
   const resetToDefaultFixtures = useCallback(() => {
-    setCurrentUser(INITIAL_DEMO_USER);
+    setCurrentUser(null);
     setRegisteredUsers([INITIAL_DEMO_USER]);
     setReviews(INITIAL_REVIEWS);
     setNotifications(INITIAL_NOTIFICATIONS);
     setActiveToasts([]);
-    triggerPushNotification('State Reset Complete', 'All profiles, reviews, and test fixtures were reset to initial baseline.', 'system');
+    localStorage.removeItem('cinetrack_current_user');
+    triggerPushNotification('State Reset Complete', 'All profiles, reviews, and test fixtures were reset to initial landing state.', 'system');
   }, [triggerPushNotification]);
 
   const seedRandomReview = useCallback(() => {
