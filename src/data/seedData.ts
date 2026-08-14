@@ -1,0 +1,123 @@
+import { UserProfile, MovieReview, AppNotification } from '../types';
+
+export const INITIAL_DEMO_USER: UserProfile = {
+  id: 'user_tester_01',
+  name: 'Alex Rivera',
+  username: 'alex_cinema',
+  email: 'alex.rivera@example.com',
+  bio: 'Cinephile, sci-fi enthusiast, and amateur film reviewer. Watching 100+ movies a year!',
+  location: 'San Francisco, CA',
+  avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
+  favoriteGenres: ['Sci-Fi', 'Thriller', 'Drama', 'Cyberpunk'],
+  joinedDate: '2025-01-15',
+  website: 'https://cinetrack.example.app/alex',
+  notificationPreferences: {
+    browserPush: true,
+    soundEnabled: true,
+    reviewLikes: true,
+    systemAlerts: true,
+  },
+};
+
+export const INITIAL_REVIEWS: MovieReview[] = [
+  {
+    id: 'rev_101',
+    userId: 'user_tester_01',
+    authorName: 'Alex Rivera',
+    authorAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
+    movieTitle: 'Interstellar',
+    rating: 5,
+    reviewText: 'An absolute masterpiece of emotional storytelling coupled with breathtaking scientific concepts and Hans Zimmers iconic score. The docking sequence alone is worth the 5 stars.',
+    watchDate: '2026-08-10',
+    createdAt: '2026-08-10T18:30:00.000Z',
+    tags: ['Sci-Fi', 'Space', 'Masterpiece'],
+    recommends: true,
+    likesCount: 24,
+    isLiked: true,
+  },
+  {
+    id: 'rev_102',
+    userId: 'user_tester_01',
+    authorName: 'Alex Rivera',
+    authorAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
+    movieTitle: 'Dune: Part Two',
+    rating: 5,
+    reviewText: 'Stunning cinematography, heavy bass design, and incredible pacing for such an expansive epic. Denis Villeneuve delivered on all fronts.',
+    watchDate: '2026-08-01',
+    createdAt: '2026-08-01T20:15:00.000Z',
+    tags: ['Epic', 'Sci-Fi', 'Visuals'],
+    recommends: true,
+    likesCount: 19,
+    isLiked: false,
+  },
+  {
+    id: 'rev_103',
+    userId: 'user_reviewer_02',
+    authorName: 'Marcus Vance',
+    authorAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
+    movieTitle: 'Inception',
+    rating: 4,
+    reviewText: 'Clever premise with brilliant execution. Pacing holds up remarkably well even on multiple rewatches.',
+    watchDate: '2026-07-28',
+    createdAt: '2026-07-28T14:10:00.000Z',
+    tags: ['Mind-Bending', 'Action'],
+    recommends: true,
+    likesCount: 12,
+    isLiked: false,
+  },
+  {
+    id: 'rev_104',
+    userId: 'user_reviewer_03',
+    authorName: 'Elena Rostova',
+    authorAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&auto=format&fit=crop&q=80',
+    movieTitle: 'The Matrix Resurrections',
+    rating: 2,
+    reviewText: 'Had some interesting meta ideas in the first 30 minutes, but quickly lost its momentum and visual punch compared to the original trilogy.',
+    watchDate: '2026-07-15',
+    createdAt: '2026-07-15T21:00:00.000Z',
+    tags: ['Sequel', 'Sci-Fi'],
+    recommends: false,
+    likesCount: 6,
+    isLiked: false,
+  }
+];
+
+export const INITIAL_NOTIFICATIONS: AppNotification[] = [
+  {
+    id: 'notif_001',
+    userId: 'user_tester_01',
+    title: 'Review Liked!',
+    message: 'Marcus Vance liked your review for "Interstellar".',
+    type: 'review_like',
+    read: false,
+    timestamp: 'Just now',
+    targetId: 'rev_101',
+  },
+  {
+    id: 'notif_002',
+    userId: 'user_tester_01',
+    title: 'Welcome to CineTrack',
+    message: 'Your profile dashboard and movie review logger are ready. Start logging reviews!',
+    type: 'system',
+    read: true,
+    timestamp: '2 hours ago',
+  }
+];
+
+export const AVAILABLE_GENRES = [
+  'Action',
+  'Adventure',
+  'Animation',
+  'Comedy',
+  'Crime',
+  'Cyberpunk',
+  'Documentary',
+  'Drama',
+  'Fantasy',
+  'Horror',
+  'Mystery',
+  'Romance',
+  'Sci-Fi',
+  'Thriller',
+  'Western'
+];

@@ -1,0 +1,6 @@
+{
+  "name": "CineTrack - Movie Reviews & Profile",
+  "description": "User profile dashboard, movie review logger with 1-5 star ratings, real-time push notifications, auth workflows, and dark mode.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
