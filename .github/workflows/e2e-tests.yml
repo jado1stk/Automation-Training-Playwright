@@ -45,7 +45,6 @@ jobs:
       
 
       - name: Run E2E tests - AI Studio
-        if: github.event_name == 'schedule'
         run: npx playwright test --project=${{ matrix.browser }}
         env:
           BASE_URL: https://cinetrack-automation.ai.studio
