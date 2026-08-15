@@ -42,7 +42,12 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps ${{ matrix.browser }}
 
-      
+      - name: Run E2E tests - Local
+        if: github.event_name != 'schedule'
+        run: npx playwright test --project=${{ matrix.browser }}
+        env:
+          CI: true
+
       - name: Run E2E tests - AI Studio
         if: github.event_name == 'schedule'
         run: npx playwright test --project=${{ matrix.browser }}
