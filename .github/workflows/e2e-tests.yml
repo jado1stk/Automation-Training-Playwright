@@ -41,7 +41,6 @@ jobs:
         if: github.event_name != 'schedule'
         run: npx playwright test --project=${{ matrix.browser }}
         env:
-          BASE_URL: http://localhost:3001
           CI: true
 
       - name: Run E2E tests - AI Studio
