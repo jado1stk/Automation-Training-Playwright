@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 /**
  * Configuration can be overridden with environment variables:
- * - BASE_URL: The base URL for tests (default: http://localhost:3001)
+ * - BASE_URL: The base URL for tests (default: http://localhost:3000)
  * - HEADED: Set to 'true' to run tests in headed mode (default: headless)
  * 
  * Examples:
@@ -11,7 +11,7 @@ import { defineConfig, devices } from '@playwright/test';
  * - Headed mode: HEADED=true npx playwright test
  */
 
-const baseURL = process.env.BASE_URL || 'http://localhost:3001';
+const baseURL = process.env.BASE_URL || 'http://localhost:3000';
 const headless = !process.env.HEADED || process.env.HEADED !== 'true';
 
 export default defineConfig({
@@ -51,7 +51,7 @@ export default defineConfig({
 
   webServer: process.env.BASE_URL ? undefined : {
     command: 'npm run dev',
-    url: 'http://localhost:3001',
+    url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
   },
